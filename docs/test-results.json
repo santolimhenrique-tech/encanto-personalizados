@@ -1,0 +1,250 @@
+[
+  {
+    "name": "Primeira visita segue tema escuro do sistema",
+    "passed": true
+  },
+  {
+    "name": "Tema acompanha sistema antes da escolha manual",
+    "passed": true
+  },
+  {
+    "name": "Alterna sem recarregar, atualiza rótulo e persiste",
+    "passed": true
+  },
+  {
+    "name": "Escolha salva prevalece após recarregar",
+    "passed": true
+  },
+  {
+    "name": "Botão de tema funciona por teclado",
+    "passed": true
+  },
+  {
+    "name": "light: sem overflow em 320px",
+    "passed": true
+  },
+  {
+    "name": "light: navegação em 320px",
+    "passed": true
+  },
+  {
+    "name": "light: sem overflow em 390px",
+    "passed": true
+  },
+  {
+    "name": "light: navegação em 390px",
+    "passed": true
+  },
+  {
+    "name": "light: fotos carregam após rolagem em 390px",
+    "passed": true
+  },
+  {
+    "name": "light: fotografias com raio de 12px e proporção preservada em 390px",
+    "passed": true
+  },
+  {
+    "name": "light: sem overflow em 768px",
+    "passed": true
+  },
+  {
+    "name": "light: navegação em 768px",
+    "passed": true
+  },
+  {
+    "name": "light: sem overflow em 1024px",
+    "passed": true
+  },
+  {
+    "name": "light: navegação em 1024px",
+    "passed": true
+  },
+  {
+    "name": "light: sem overflow em 1440px",
+    "passed": true
+  },
+  {
+    "name": "light: navegação em 1440px",
+    "passed": true
+  },
+  {
+    "name": "light: fotos carregam após rolagem em 1440px",
+    "passed": true
+  },
+  {
+    "name": "light: fotografias com raio de 12px e proporção preservada em 1440px",
+    "passed": true
+  },
+  {
+    "name": "light: sem overflow em 1920px",
+    "passed": true
+  },
+  {
+    "name": "light: navegação em 1920px",
+    "passed": true
+  },
+  {
+    "name": "light: contraste de corpo e botões >= 4.5:1",
+    "passed": true
+  },
+  {
+    "name": "light: imagens intactas com contenção",
+    "passed": true
+  },
+  {
+    "name": "light: DM Sans aplicada globalmente",
+    "passed": true
+  },
+  {
+    "name": "light: oval do Hero preservado",
+    "passed": true
+  },
+  {
+    "name": "dark: sem overflow em 320px",
+    "passed": true
+  },
+  {
+    "name": "dark: navegação em 320px",
+    "passed": true
+  },
+  {
+    "name": "dark: sem overflow em 390px",
+    "passed": true
+  },
+  {
+    "name": "dark: navegação em 390px",
+    "passed": true
+  },
+  {
+    "name": "dark: fotos carregam após rolagem em 390px",
+    "passed": true
+  },
+  {
+    "name": "dark: fotografias com raio de 12px e proporção preservada em 390px",
+    "passed": true
+  },
+  {
+    "name": "dark: sem overflow em 768px",
+    "passed": true
+  },
+  {
+    "name": "dark: navegação em 768px",
+    "passed": true
+  },
+  {
+    "name": "dark: sem overflow em 1024px",
+    "passed": true
+  },
+  {
+    "name": "dark: navegação em 1024px",
+    "passed": true
+  },
+  {
+    "name": "dark: sem overflow em 1440px",
+    "passed": true
+  },
+  {
+    "name": "dark: navegação em 1440px",
+    "passed": true
+  },
+  {
+    "name": "dark: fotos carregam após rolagem em 1440px",
+    "passed": true
+  },
+  {
+    "name": "dark: fotografias com raio de 12px e proporção preservada em 1440px",
+    "passed": true
+  },
+  {
+    "name": "dark: sem overflow em 1920px",
+    "passed": true
+  },
+  {
+    "name": "dark: navegação em 1920px",
+    "passed": true
+  },
+  {
+    "name": "dark: contraste de corpo e botões >= 4.5:1",
+    "passed": true
+  },
+  {
+    "name": "dark: imagens intactas com contenção",
+    "passed": true
+  },
+  {
+    "name": "dark: DM Sans aplicada globalmente",
+    "passed": true
+  },
+  {
+    "name": "dark: oval do Hero preservado",
+    "passed": true
+  },
+  {
+    "name": "Formulário, campos e avisos antigos removidos",
+    "passed": true
+  },
+  {
+    "name": "Todos os CTAs usam número e mensagem oficiais",
+    "passed": true
+  },
+  {
+    "name": "Mensagem da categoria preservada",
+    "passed": true
+  },
+  {
+    "name": "Links internos preservados",
+    "passed": true
+  },
+  {
+    "name": "Menu abre no celular",
+    "passed": true
+  },
+  {
+    "name": "Escape fecha menu e devolve foco",
+    "passed": true
+  },
+  {
+    "name": "Filtro seleciona viagens",
+    "passed": true
+  },
+  {
+    "name": "Filtro restaura quatro categorias",
+    "passed": true
+  },
+  {
+    "name": "FAQ expande",
+    "passed": true
+  },
+  {
+    "name": "FAQ contém apenas as três perguntas aprovadas e a resposta de várias unidades",
+    "passed": true
+  },
+  {
+    "name": "Texto provisório removido do Sobre",
+    "passed": true
+  },
+  {
+    "name": "Localização correta antes do rodapé",
+    "passed": true
+  },
+  {
+    "name": "Movimento reduzido respeitado",
+    "passed": true
+  },
+  {
+    "name": "Sem exceções JavaScript",
+    "passed": true
+  },
+  {
+    "name": "Tema funciona com armazenamento bloqueado",
+    "passed": true
+  },
+  {
+    "name": "Projeto abre diretamente como arquivo",
+    "passed": true
+  },
+  {
+    "name": "Conteúdo, navegação e WhatsApp funcionam sem JS",
+    "passed": true
+  }
+]

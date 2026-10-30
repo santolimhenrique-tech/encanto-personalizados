@@ -1,0 +1,28 @@
+node_modules/
+/dist/
+/.vercel/
+/.taste-skill/
+/work/
+/tmp/
+/temp/
+/coverage/
+/.cache/
+*.log
+*.tmp
+*.temp
+.DS_Store
+Thumbs.db
+
+# Variáveis locais e credenciais nunca devem entrar no repositório.
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+*.p12
+*.pfx
+credentials*.json
+secrets*.json
+
+# Relatórios do navegador contêm caminhos específicos desta máquina.
+/docs/*inspection.json

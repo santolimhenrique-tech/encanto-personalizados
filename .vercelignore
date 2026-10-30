@@ -1,0 +1,6 @@
+.agents
+.taste-skill
+docs
+tests
+*.md
+public/images/README.md
