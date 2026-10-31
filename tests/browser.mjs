@@ -71,13 +71,13 @@ try {
   }
   check('Formulário, campos e avisos antigos removidos', await page.eval(() => !document.querySelector('form,textarea,#order-category,#order-notice,#contact-dialog') && document.querySelectorAll('#pedido [data-order]').length === 1));
   check('Todos os CTAs usam número e mensagem oficiais', await page.eval(() => {
-    const expected='Olá! Conheci a Encanto Personalizados pelo site e gostaria de fazer um pedido de ímãs personalizados.';
+    const expected='Olá! Conheci a Encanto Personalizados pelo site e gostaria de fazer um pedido de produtos personalizados.';
     return [...document.querySelectorAll('[data-order]')].every(link => {
       const u=new URL(link.href);
       return u.hostname==='wa.me' && u.pathname==='/5511940596498' && u.searchParams.get('text').startsWith(expected) && link.target==='_blank' && link.rel.includes('noopener');
     }) && new URL(document.querySelector('#pedido [data-order]').href).searchParams.get('text')===expected;
   }));
-  check('Mensagem da categoria preservada', await page.eval(() => new URL(document.querySelector('[data-order="fotos"]').href).searchParams.get('text').includes('Ímãs com fotos')));
+  check('Mensagem da categoria preservada', await page.eval(() => new URL(document.querySelector('[data-order="imas"]').href).searchParams.get('text').includes('Ímãs personalizados')));
   check('Links internos preservados', await page.eval(() => [...document.querySelectorAll('a[href^="#"]')].every(a => document.querySelector(a.getAttribute('href')))));
   await page.setViewport({ width:390, height:844 });
   await page.eval(() => document.querySelector('.menu-toggle').click());
@@ -85,10 +85,10 @@ try {
   await page.send('Input.dispatchKeyEvent',{type:'keyDown',key:'Escape',code:'Escape'});
   await page.send('Input.dispatchKeyEvent',{type:'keyUp',key:'Escape',code:'Escape'});
   check('Escape fecha menu e devolve foco', await page.eval(() => document.querySelector('.menu-toggle').getAttribute('aria-expanded')==='false' && document.activeElement.matches('.menu-toggle')));
-  await page.eval(() => document.querySelector('[data-filter="viagens"]').click());
-  check('Filtro seleciona viagens', await page.eval(() => document.querySelectorAll('.collection:not([hidden])').length===1 && !document.querySelector('[data-category="viagens"]').hidden));
+  await page.eval(() => document.querySelector('[data-filter="broches"]').click());
+  check('Filtro seleciona broches', await page.eval(() => document.querySelectorAll('.collection:not([hidden])').length===1 && !document.querySelector('[data-category="broches"]').hidden));
   await page.eval(() => document.querySelector('[data-filter="all"]').click());
-  check('Filtro restaura quatro categorias', await page.eval(() => document.querySelectorAll('.collection:not([hidden])').length===4));
+  check('Filtro restaura três categorias', await page.eval(() => document.querySelectorAll('.collection:not([hidden])').length===3));
   await page.eval(() => document.querySelector('summary').click());
   check('FAQ expande', await page.eval(() => document.querySelector('details').open));
   check('FAQ contém apenas as três perguntas aprovadas e a resposta de várias unidades', await page.eval(() => document.querySelectorAll('.faq details').length === 3 && [...document.querySelectorAll('.faq summary')].every(el => !/pagamento|entregas/.test(el.textContent)) && document.querySelector('.faq details:last-child p').textContent === 'Sim! Você pode encomendar várias unidades de ímãs personalizados. Entre em contato pelo WhatsApp para contar sua ideia e solicitar um orçamento.'));
@@ -105,10 +105,10 @@ try {
   check('Tema funciona com armazenamento bloqueado', await blocked.eval(() => document.documentElement.dataset.theme==='light') && blocked.consoleErrors.length===0);
   await blocked.close();
   await page.goto(pathToFileURL(resolve('index.html')).href);
-  check('Projeto abre diretamente como arquivo', await page.eval(() => document.querySelectorAll('[data-filter]').length===5));
+  check('Projeto abre diretamente como arquivo', await page.eval(() => document.querySelectorAll('[data-filter]').length===4));
   await page.send('Emulation.setScriptExecutionDisabled',{value:true});
   await page.goto(url);
-  check('Conteúdo, navegação e WhatsApp funcionam sem JS', await page.eval(() => document.querySelectorAll('.collection:not([hidden])').length===4 && getComputedStyle(document.querySelector('#navigation')).display!=='none' && [...document.querySelectorAll('[data-order]')].every(link => link.href.startsWith('https://wa.me/5511940596498?text='))));
+  check('Conteúdo, navegação e WhatsApp funcionam sem JS', await page.eval(() => document.querySelectorAll('.collection:not([hidden])').length===3 && getComputedStyle(document.querySelector('#navigation')).display!=='none' && [...document.querySelectorAll('[data-order]')].every(link => link.href.startsWith('https://wa.me/5511940596498?text='))));
   console.log(`${results.length} verificações aprovadas.`);
   mkdirSync('docs',{recursive:true});
   writeFileSync('docs/test-results.json',JSON.stringify(results,null,2));

@@ -1,12 +1,28 @@
 (() => {
   'use strict';
   const config = window.ENCANTO_CONFIG || {};
+  const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+  const activeAnimations = new Set();
+  // No hidden resting state: missing JS/animation support leaves all content readable.
+  const enter = (element, delay = 0, photo = false, duration = 600) => {
+    if (reducedMotion.matches || !element?.animate) return;
+    const animation = element.animate([
+      { opacity: .15, transform: photo ? 'scale(.97)' : 'translateY(16px)' },
+      { opacity: 1, transform: photo ? 'scale(1)' : 'translateY(0)' }
+    ], { duration, delay, easing: 'cubic-bezier(.16,1,.3,1)', fill: 'backwards' });
+    activeAnimations.add(animation);
+    animation.finished.catch(() => {}).finally(() => activeAnimations.delete(animation));
+  };
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) activeAnimations.forEach(animation => animation.cancel());
+  });
   const categories = config.categories || {};
+  const productNames = config.productNames || categories;
   const $ = (selector) => document.querySelector(selector);
   const phone = String(config.whatsapp || '').trim();
   const hasPhone = /^[1-9]\d{7,14}$/.test(phone);
-  const message = config.message || 'Olá! Gostaria de um orçamento de ímãs personalizados.';
-  const makeMessage = (category = '') => [message, categories[category] ? `Tenho interesse em ${categories[category]}.` : ''].filter(Boolean).join('\n\n');
+  const message = config.message || 'Olá! Gostaria de um orçamento de produtos personalizados.';
+  const makeMessage = (category = '') => [message, productNames[category] ? `Tenho interesse em ${productNames[category]}.` : ''].filter(Boolean).join('\n\n');
   const whatsappUrl = (text) => `https://wa.me/${phone}?text=${encodeURIComponent(text)}`;
   const nav = $('#navigation');
   const toggle = $('.menu-toggle');
@@ -37,13 +53,15 @@
 
   const picker = $('.category-picker');
   const collections = [...document.querySelectorAll('.collection')];
-  const options = { all: 'Todas as histórias', ...categories };
+  const options = { all: 'Todos os produtos', ...categories };
   Object.entries(options).forEach(([key, label]) => {
     const button = document.createElement('button');
     button.type = 'button'; button.textContent = label; button.dataset.filter = key; button.setAttribute('aria-pressed', String(key === 'all'));
     button.addEventListener('click', () => {
       picker.querySelectorAll('button').forEach((item) => item.setAttribute('aria-pressed', String(item === button)));
+      activeAnimations.forEach(animation => { if (collections.includes(animation.effect?.target)) animation.cancel(); });
       collections.forEach((item) => { item.hidden = key !== 'all' && item.dataset.category !== key; });
+      collections.filter(item => !item.hidden).forEach((item, index) => enter(item, index * 70, false, 400));
       $('.collection-status').textContent = key === 'all' ? 'Todas as possibilidades de personalização.' : `Exibindo: ${label}.`;
     });
     picker.append(button);
@@ -79,8 +97,27 @@
     const container = $('.about-copy'); container.querySelectorAll('p').forEach((p) => p.remove());
     config.about.paragraphs.forEach((text) => { const p = document.createElement('p'); p.textContent = text; container.append(p); });
   }
-  if ('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    const observer = new IntersectionObserver((entries) => entries.forEach((entry) => { if (entry.isIntersecting) { entry.target.classList.add('reveal-in'); observer.unobserve(entry.target); } }), { threshold: .12 });
-    document.querySelectorAll('h1,h2,.hero-description,.hero-actions,.collection,.steps li,.brand-letter,.about-copy p,.faq-list details').forEach((el) => observer.observe(el));
+  enter($('#hero-title'), 0, false, 650);
+  enter($('.hero-description'), 80, false, 600);
+  document.querySelectorAll('.hero-actions > a').forEach((el, index) => enter(el, 160 + index * 70, false, 500));
+  enter($('.hero-photo img'), 100, true, 750);
+  if ('IntersectionObserver' in window && !reducedMotion.matches) {
+    const observer = new IntersectionObserver((entries) => {
+      let stagger = 0;
+      entries.forEach((entry) => {
+        if (!entry.isIntersecting) return;
+        observer.unobserve(entry.target);
+        if (!entry.target.hidden) {
+          entry.target.style.setProperty('--reveal-delay', `${Math.min(stagger++ * 80, 160)}ms`);
+          entry.target.classList.add('scroll-reveal');
+        }
+      });
+    }, { threshold: 0, rootMargin: '0px 0px -32px 0px' });
+    document.querySelectorAll('.section-heading,.collection,.product-film,.how-grid > div,.steps,.brand-letter,.about-copy,.order-grid,.faq > div,.location').forEach(el => observer.observe(el));
+    // Keyboard focus must never wait for a reveal animation.
+    document.addEventListener('focusin', event => activeAnimations.forEach(animation => {
+      const target = animation.effect?.target;
+      if (target?.contains(event.target)) animation.cancel();
+    }));
   }
 })();
