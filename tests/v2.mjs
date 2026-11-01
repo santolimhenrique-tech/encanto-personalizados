@@ -17,10 +17,10 @@ try {
       Element.prototype.animate=function(frames,options){ window.motionLog.push({tag:this.id||this.className,frames,options}); return original.call(this,frames,options); };
       new PerformanceObserver(list=>list.getEntries().forEach(e=>{if(!e.hadRecentInput){window.shiftScore+=e.value;window.shifts.push({value:e.value,sources:e.sources.map(s=>({tag:s.node?.tagName,cls:s.node?.className,prev:s.previousRect,next:s.currentRect}))})}})).observe({type:'layout-shift',buffered:true});
     ` });
-    await page.goto(url, { settleMs: 1000 });
+    await page.goto(url, { settleMs: 3000 });
     check(`Hero choreographed ${width}`, await page.eval(() => {
       const log=window.motionLog;
-      return log.some(x=>x.tag==='hero-title' && x.options.duration===650) && log.some(x=>x.tag==='hero-description' && x.options.delay===80) && log.some(x=>x.frames[0].transform==='scale(.97)');
+      return log.some(x=>x.tag==='hero-title' && x.options.duration===550) && log.some(x=>x.tag==='cinema-description' && x.options.delay===500) && log.some(x=>x.frames[0].transform==='scale(1.05)');
     }));
     check(`Broches copy, alt and WhatsApp ${width}`, await page.eval(() => {
       const card=document.querySelector('[data-category="broches"]');

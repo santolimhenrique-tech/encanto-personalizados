@@ -8,7 +8,7 @@ const html = readFileSync('dist/index.html', 'utf8');
 const paths = new Set(['/']);
 const anchors = [...html.matchAll(/<a\b[^>]*>/g)].map(m => m[0]);
 const orders = anchors.filter(tag => /\bdata-order(?:=|\s|>)/.test(tag));
-assert.equal(orders.length, 8, 'CTAs de pedido ausentes');
+assert.equal(orders.length, 9, 'CTAs de pedido ausentes');
 for (const tag of orders) {
   const link = new URL(/href="([^"]+)"/.exec(tag)[1]);
   assert.equal(link.origin + link.pathname, 'https://wa.me/5511940596498');

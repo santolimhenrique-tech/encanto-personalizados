@@ -97,10 +97,19 @@
     const container = $('.about-copy'); container.querySelectorAll('p').forEach((p) => p.remove());
     config.about.paragraphs.forEach((text) => { const p = document.createElement('p'); p.textContent = text; container.append(p); });
   }
-  enter($('#hero-title'), 0, false, 650);
-  enter($('.hero-description'), 80, false, 600);
-  document.querySelectorAll('.hero-actions > a').forEach((el, index) => enter(el, 160 + index * 70, false, 500));
-  enter($('.hero-photo img'), 100, true, 750);
+  Promise.resolve(window.encantoEntrance).then(() => {
+    if (reducedMotion.matches) return;
+    const photo = $('.cinema-photo');
+    if (photo?.animate) {
+      const animation = photo.animate([{ opacity: .4, transform: 'scale(1.05)' }, { opacity: 1, transform: 'scale(1)' }], { duration: 600, easing: 'cubic-bezier(.16,1,.3,1)' });
+      activeAnimations.add(animation);
+      animation.finished.catch(() => {}).finally(() => activeAnimations.delete(animation));
+    }
+    enter($('#hero-title'), 200, false, 550);
+    enter($('.cinema-description'), 500, false, 500);
+    document.querySelectorAll('.cinema-actions > a').forEach((el, index) => enter(el, 600 + index * 70, false, 500));
+    enter($('.cinema-scroll'), 1100, false, 400);
+  });
   if ('IntersectionObserver' in window && !reducedMotion.matches) {
     const observer = new IntersectionObserver((entries) => {
       let stagger = 0;
@@ -113,7 +122,7 @@
         }
       });
     }, { threshold: 0, rootMargin: '0px 0px -32px 0px' });
-    document.querySelectorAll('.section-heading,.collection,.product-film,.how-grid > div,.steps,.brand-letter,.about-copy,.order-grid,.faq > div,.location').forEach(el => observer.observe(el));
+    document.querySelectorAll('.hero-copy,.hero-photo,.section-heading,.collection,.product-film,.how-grid > div,.steps,.brand-letter,.about-copy,.order-grid,.faq > div,.location').forEach(el => observer.observe(el));
     // Keyboard focus must never wait for a reveal animation.
     document.addEventListener('focusin', event => activeAnimations.forEach(animation => {
       const target = animation.effect?.target;
