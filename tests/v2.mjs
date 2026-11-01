@@ -26,7 +26,7 @@ try {
       const card=document.querySelector('[data-category="broches"]');
       const link=card.querySelector('[data-order]');
       const text=new URL(link.href).searchParams.get('text');
-      return card.querySelector('h3').textContent==='Broches personalizados' && link.textContent==='Personalizar meu broche' && text.includes('Broches personalizados') && !text.includes('ímãs') && [...card.querySelectorAll('img')].every(img=>/broches/i.test(img.alt));
+      return card.querySelector('h3').textContent==='Broches personalizados' && link.textContent==='Personalizar meu broche' && text.includes('Broches personalizados') && !text.includes('ímãs') && card.querySelector('video')?.preload==='none' && !card.querySelector('video').autoplay;
     }));
     check(`Initial layout stability ${width}`, await page.eval(() => window.shiftScore < .1));
     await page.eval(async () => { await document.fonts.ready; window.shiftScore = 0; });

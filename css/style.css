@@ -848,3 +848,8 @@ h3, .collection-copy h3 { font-size: 28px; line-height: 1.22; letter-spacing: -.
   .cinema-scroll { bottom: 20px; }
 }
 @media (prefers-reduced-motion: reduce) { .intro-active .brand-intro { display: none; } }
+
+/* Product video retains the gallery footprint and its own portrait proportions. */
+.collection .product-photo video { position: absolute; inset: 0; margin: auto; display: block; width: auto; height: 100%; max-width: 100%; aspect-ratio: 480 / 854; object-fit: contain; border-radius: 12px; }
+
+.collection .broches-video { margin-top: 24px; }
