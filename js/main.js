@@ -83,20 +83,14 @@
     loadedProducts++; if (loadedProducts === collections.length) $('.asset-note').hidden = true;
     });
   };
-  const loadOwner = () => loadImage(config.ownerImage, (img) => { img.className = 'about-photo'; $('.brand-letter').replaceWith(img); });
   if ('IntersectionObserver' in window) {
     const imageObserver = new IntersectionObserver((entries) => entries.forEach((entry) => {
       if (!entry.isIntersecting) return;
-      if (entry.target.matches('.collection')) loadProduct(entry.target); else loadOwner();
+      loadProduct(entry.target);
       imageObserver.unobserve(entry.target);
     }), { rootMargin: '300px' });
     collections.forEach((item) => imageObserver.observe(item));
-    imageObserver.observe($('.brand-letter'));
-  } else { collections.forEach(loadProduct); loadOwner(); }
-  if (config.about?.approved && Array.isArray(config.about.paragraphs) && config.about.paragraphs.length) {
-    const container = $('.about-copy'); container.querySelectorAll('p').forEach((p) => p.remove());
-    config.about.paragraphs.forEach((text) => { const p = document.createElement('p'); p.textContent = text; container.append(p); });
-  }
+  } else { collections.forEach(loadProduct); }
   Promise.resolve(window.encantoEntrance).then(() => {
     if (reducedMotion.matches) return;
     const photo = $('.cinema-photo');
@@ -122,7 +116,7 @@
         }
       });
     }, { threshold: 0, rootMargin: '0px 0px -32px 0px' });
-    document.querySelectorAll('.hero-copy,.hero-photo,.section-heading,.collection,.product-film,.how-grid > div,.steps,.brand-letter,.about-copy,.order-grid,.faq > div,.location').forEach(el => observer.observe(el));
+    document.querySelectorAll('.hero-copy,.hero-photo,.section-heading,.collection,.product-film,.how-grid > div,.steps,.order-grid,.founder-portrait,.founder-intro,.founder-story,.faq > div,.location').forEach(el => observer.observe(el));
     // Keyboard focus must never wait for a reveal animation.
     document.addEventListener('focusin', event => activeAnimations.forEach(animation => {
       const target = animation.effect?.target;

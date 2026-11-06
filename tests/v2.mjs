@@ -28,6 +28,7 @@ try {
       const text=new URL(link.href).searchParams.get('text');
       return card.querySelector('h3').textContent==='Broches personalizados' && link.textContent==='Personalizar meu broche' && text.includes('Broches personalizados') && !text.includes('ímãs') && card.querySelector('video')?.preload==='none' && !card.querySelector('video').autoplay;
     }));
+    console.log(`Initial CLS ${width}:`, await page.eval(()=>window.shiftScore));
     check(`Initial layout stability ${width}`, await page.eval(() => window.shiftScore < .1));
     await page.eval(async () => { await document.fonts.ready; window.shiftScore = 0; });
     await page.eval(() => document.querySelector('#produtos').scrollIntoView({behavior:'instant'}));
@@ -49,7 +50,7 @@ try {
     }
     await pause(1100);
     if(width===1440) {
-      const point=await page.eval(()=>{const card=document.querySelector('.collection');card.scrollIntoView({behavior:'instant',block:'center'});const r=card.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+30};});
+      const point=await page.eval(()=>{const image=document.querySelector('.collection .product-photo img');image.scrollIntoView({behavior:'instant',block:'center'});const r=image.getBoundingClientRect();return {x:r.x+r.width/2,y:r.y+r.height/2};});
       await page.send('Input.dispatchMouseEvent',{type:'mouseMoved',...point});
       await pause(700);
       check('Desktop hover raises card and zooms image',await page.eval(()=>getComputedStyle(document.querySelector('.collection')).transform!=='none' && getComputedStyle(document.querySelector('.product-photo img')).transform!=='none'));
@@ -66,7 +67,7 @@ try {
     }
     await page.send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
     await page.goto(url,{settleMs:200});
-    await page.eval(()=>{document.querySelector('[data-filter="broches"]').click();document.querySelector('#sobre').scrollIntoView({behavior:'instant'});});
+    await page.eval(()=>{document.querySelector('[data-filter="broches"]').click();document.querySelector('#sobre-mim').scrollIntoView({behavior:'instant'});});
     await pause(150);
     check(`Reduced motion ${width}`,await page.eval(()=>window.motionLog.length===0 && document.getAnimations().length===0));
     check(`No JavaScript errors ${width}`,page.consoleErrors.length===0);

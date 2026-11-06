@@ -12,12 +12,4 @@ window.ENCANTO_CONFIG = {
     imas: { src: 'public/images/familia-gestacao-960.webp', alt: 'Três ímãs com fotografias de gestação em família', width: 960, height: 720 },
     broches: { src: 'public/images/bandeiras-india-suica-960.webp', alt: 'Broches com as bandeiras da Índia e da Suíça', width: 960, height: 1280 },
   },
-  ownerImage: null,
-  about: {
-    approved: false,
-    paragraphs: [
-      'A Encanto Personalizados nasceu do carinho pelos pequenos detalhes e da vontade de transformar momentos especiais em lembranças que fazem parte do nosso dia a dia.',
-      'Cada produto é uma oportunidade de guardar uma história, celebrar uma conquista ou presentear alguém querido.'
-    ]
-  }
 };

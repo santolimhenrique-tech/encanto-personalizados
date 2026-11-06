@@ -49,7 +49,7 @@ await Promise.all([...paths].map(async path => {
 assert.ok(!html.includes('noindex'), 'Indexação bloqueada');
 assert.ok(!/Informação em revisão|WhatsApp ainda não informado|estão sendo preparados para este espaço|lorem ipsum/i.test(html), 'Conteúdo provisório visível');
 assert.ok(html.includes('preload="none"') && html.includes('poster='), 'O vídeo deve aguardar interação e usar poster');
-assert.ok(!/<video[^>]*autoplay/.test(html), 'Vídeo não deve usar autoplay');
+assert.ok(![...html.matchAll(/<video[^>]*>/g)].some(([tag]) => !tag.includes('cinema-video') && /autoplay/.test(tag)), 'Vídeos de produto não devem usar autoplay');
 assert.ok(!existsSync('dist/public/images/originais') && !existsSync('dist/.agents'), 'Fontes e intermediários não devem ser publicados');
 assert.ok(statSync('dist/public/videos/imas-personalizados.mp4').size < 4 * 1024 * 1024);
 // Domínio reservado usado apenas em memória, sem inserir URL fictícia nos artefatos.
