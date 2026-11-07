@@ -21,7 +21,7 @@ try {
   }
  }
  check('Navigation anchors and position',await page.eval(()=>[...document.querySelectorAll('header a,footer a')].filter(a=>a.textContent==='Sobre mim').length===2 && [...document.querySelectorAll('a[href="#sobre-mim"]')].length===2 && document.querySelector('#sobre-mim').nextElementSibling.matches('.order')));
- check('Three approved paragraphs and accessible image',await page.eval(()=>document.querySelectorAll('.founder-story p').length===3 && document.querySelector('.founder-story p:last-child').textContent.endsWith('lindas!') && document.querySelector('.founder-portrait img').alt.includes('bebê') && document.querySelector('#sobre-mim').getAttribute('aria-labelledby')==='founder-title'));
+ check('Three approved paragraphs and accessible image',await page.eval(()=>document.querySelectorAll('.founder-story p').length===3 && document.querySelector('.founder-story p:last-child').textContent.endsWith('lindas!') && document.querySelector('.founder-portrait img').alt.includes('Encanto Personalizados') && document.querySelector('.founder-portrait img').src.endsWith('/empreendedora-retrato.jpg') && document.querySelector('#sobre-mim').getAttribute('aria-labelledby')==='founder-title'));
  await page.send('Emulation.setEmulatedMedia',{features:[{name:'prefers-reduced-motion',value:'reduce'}]});
  check('Reduced motion',await page.eval(()=>getComputedStyle(document.querySelector('.founder-story')).animationName==='none'));
  check('No JavaScript errors',page.consoleErrors.length===0);
